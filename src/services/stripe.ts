@@ -10,6 +10,6 @@ export const stripe = new Stripe(
       
       name: 'TCC',
       version
-    }
+    },
   }
 )

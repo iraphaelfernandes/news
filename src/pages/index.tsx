@@ -13,7 +13,7 @@ interface HomeProps {
   }
 }
 
-export default function Home({product} ) {
+export default function Home({product}:HomeProps ) {
 
   
   
@@ -22,14 +22,16 @@ export default function Home({product} ) {
     <Head>
     <title>Home | news</title>
     </Head>
+    
     <main className={styles.contentContainer}>
+    
       <section className={styles.hero}>
         <span>Hey, welcome</span>
         <h1>News about the <span>React</span> world.</h1>
-          <p>
-            Get access to all the publications
-            <span>for {product.amount} month</span>
-          </p>
+        <p>
+          Get access to all the publications
+          <span> for {product.amount} month</span>
+        </p>
         <SubscribeButton/>
       </section>
       
@@ -41,8 +43,9 @@ export default function Home({product} ) {
 
 
 export const getServerSideProps:GetServerSideProps = async ()=>{
+  
   const price = await stripe.prices.retrieve(
-    'price_1JW8lKCUQz1UtjErDKtLoYJu',
+    'price_1JWlWoHyuVl0344xPHr1qZAd',
     {
     expand: ['product']
     }
@@ -57,7 +60,7 @@ export const getServerSideProps:GetServerSideProps = async ()=>{
   return {
     
     props: {
-     product
+      product
     }
   }
 }
