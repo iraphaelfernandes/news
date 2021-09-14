@@ -31,16 +31,16 @@ export default function Home({product}:HomeProps ) {
     <main className={styles.contentContainer}>
     
       <section className={styles.hero}>
-        <span>Hey, welcome</span>
-        <h1>News about the <span>React</span> world.</h1>
+        <span>Bem vindo</span>
+        <h1>Esse é a sua fonte de informação</h1>
         <p>
-          Get access to all the publications
-          <span> for {product.amount} month</span>
+          Se inscreva para ter acesso ao conteúdo
+          <span> por {product.amount} mensal</span>
         </p>
         <SubscribeButton priceId={product.priceId}/>
       </section>
       
-      <img src="/images/avatar.svg" alt="Girl Coding"/>
+      <img src="/images/pc-news.png" alt="Girl Coding"/>
     </main>
     </>
   )
