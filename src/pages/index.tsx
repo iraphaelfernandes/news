@@ -40,7 +40,7 @@ export default function Home({product}:HomeProps ) {
         <SubscribeButton priceId={product.priceId}/>
       </section>
       
-      <img src="/images/pc-news.png" alt="Girl Coding"/>
+      <img src="/images/pc-news.png" alt="Home image"/>
     </main>
     </>
   )
@@ -50,7 +50,7 @@ export default function Home({product}:HomeProps ) {
 export const getStaticProps:GetStaticProps = async ()=>{
   
   const price = await stripe.prices.retrieve(
-    'price_1JaWHRHyuVl0344xOM3NEqxn',
+    'price_1JtOvsHyuVl0344x26wpWXb3',
     {
     expand: ['product']
     }
