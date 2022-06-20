@@ -23,10 +23,9 @@ export const config = {
     bodyParser: false
   }
 }
-
 const relevantEvents = new Set([
-
   'checkout.session.completed',
+  
   'customer.subscription.updated',
   'customer.subscription.deleted',
 ])
@@ -62,7 +61,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             
             await saveSubscription(
               
-              subscription.id,
+              subscription.id, //id da assinatura stripe
               subscription.customer.toString(),
               false
             )

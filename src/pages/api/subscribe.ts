@@ -1,5 +1,4 @@
 import { fauna } from './../../services/fauna';
-
 import { stripe } from '../../services/stripe'
 import { getSession } from 'next-auth/client'
 import { NextApiResponse, NextApiRequest } from 'next';
@@ -15,7 +14,6 @@ type User ={
     stripe_customer_id: string; 
   }
 }
-
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) =>{
@@ -63,7 +61,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) =>{
       billing_address_collection: 'required',
       line_items: [
         
-        {price: 'price_1JaWHRHyuVl0344xOM3NEqxn', quantity: 1}
+        {price: 'price_1KpCLDHyuVl0344xicLpn9Tv', quantity: 1}
       ],
       mode: 'subscription',
       allow_promotion_codes: true,
