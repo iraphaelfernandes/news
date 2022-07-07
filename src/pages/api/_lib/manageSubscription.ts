@@ -31,37 +31,45 @@ export async function saveSubscription(
   
   const subscriptionData = {
     
-    id:subscription.id,
+    id: subscription.id,
     userId: userRef,
     status: subscription.status,
     price_id: subscription.items.data[0].price.id,
   }
   
-  if(createAction){
-    await fauna.query(
-      q.Create(
-        q.Collection('subscriptions'),
-        {data: subscription}
-      )
+  await fauna.query(
+    q.Create(
+      q.Collection('subscriptions'),
+      {data: subscriptionData}
     )
-  }else{
-    await fauna.query(
-      
-      q.Replace(
-        q.Select(
-          "ref",
-          q.Get(
-            q.Match(
-              q.Index('subscription_by_id'),
-              subscriptionId
-            )
-          )
-        ),
-        {
-          data:subscriptionData
-        }
-      )
-    )
-  }
+  )
 
+  
+  
+  // if(createAction){
+  //   await fauna.query(
+  //     q.Create(
+  //       q.Collection('subscriptions'),
+  //       {data: subscriptionData}
+  //     )
+  //   )
+  // } else{
+  //   await fauna.query(
+      
+  //     q.Replace(
+  //       q.Select(
+  //         "ref",
+  //         q.Get(
+  //           q.Match(
+  //             q.Index('subscription_by_id'),
+  //             subscriptionId
+  //           )
+  //         )
+  //       ),
+        
+  //       { data: subscriptionData }
+        
+  //     )
+  //   )
+  // }
 }

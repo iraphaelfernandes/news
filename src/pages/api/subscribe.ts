@@ -1,6 +1,6 @@
 import { fauna } from './../../services/fauna';
 import { stripe } from '../../services/stripe'
-import { getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/client' 
 import { NextApiResponse, NextApiRequest } from 'next';
 import {query as q} from 'faunadb'
 
@@ -79,5 +79,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) =>{
 }
 
 
-//'price_1JWlWoHyuVl0344xPHr1qZAd'
 

@@ -14,6 +14,56 @@ export default NextAuth({
     }),
     
   ],
+
+  //--------------------
+  
+  // callbacks : {
+    
+  //   async signIn(user,  account, profile){
+      
+      
+  //     const {email} = user 
+      
+  //     try{
+        
+  //       await fauna .query(
+        
+  //         q.If(
+  //           q.Not(
+  //             q.Exists(
+  //               q.Match(
+  //                 q.Index('user_by_email'),
+  //                 q.Casefold( user.email)
+  //               )
+  //             )
+  //           ),
+  //           q.Create(
+  //             q.Collection('user'),
+  //             {data: {email}}
+  //           ),
+  //           q.Get( //select
+              
+  //           q.Match(
+  //             q.Index('user_by_email'),
+  //             q.Casefold( user.email)
+  //           )
+              
+  //           )
+  //         )
+  //       )
+  //       return true
+
+  //     } catch {
+        
+  //       return false
+  //     }
+      
+  //   },
+  // }
+  
+  // })
+  
+  
   callbacks: {
     
     async session(session){
@@ -92,8 +142,10 @@ export default NextAuth({
         )
         return true
       } catch {
+        
         return false
       }
     },
   }
+  
 })
