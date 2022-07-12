@@ -14,55 +14,6 @@ export default NextAuth({
     }),
     
   ],
-
-  //--------------------
-  
-  // callbacks : {
-    
-  //   async signIn(user,  account, profile){
-      
-      
-  //     const {email} = user 
-      
-  //     try{
-        
-  //       await fauna .query(
-        
-  //         q.If(
-  //           q.Not(
-  //             q.Exists(
-  //               q.Match(
-  //                 q.Index('user_by_email'),
-  //                 q.Casefold( user.email)
-  //               )
-  //             )
-  //           ),
-  //           q.Create(
-  //             q.Collection('user'),
-  //             {data: {email}}
-  //           ),
-  //           q.Get( //select
-              
-  //           q.Match(
-  //             q.Index('user_by_email'),
-  //             q.Casefold( user.email)
-  //           )
-              
-  //           )
-  //         )
-  //       )
-  //       return true
-
-  //     } catch {
-        
-  //       return false
-  //     }
-      
-  //   },
-  // }
-  
-  // })
-  
   
   callbacks: {
     
@@ -75,7 +26,7 @@ export default NextAuth({
         const userActiveSubscription = await fauna.query(
 
           q.Get(
-           q.Intersection([
+            q.Intersection([
             q.Match(
               q.Index('subscription_by_user_ref'),
               q.Select(

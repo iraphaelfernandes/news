@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next';
 import { getPrismicClient } from '../../services/prismic';
 import Prismic from "@prismicio/client"
 import {RichText} from 'prismic-dom'
+import Link from 'next/link';
 
 type Post = {
           slug: string;
@@ -28,12 +29,15 @@ return(
 <main className={styles.container}>
           <div className={styles.posts}>
           {posts.map(post => (
-                    <a key={post.slug} href="#">
+                    // eslint-disable-next-line react/jsx-key
+                    <Link href={`/posts/${post.slug}`}>
+                    <a key={post.slug}>
                               <time>{post.updatedAt}</time>
                               <strong>{post.title}</strong>
                               <p>{post.excerpt}</p>
                               
                     </a>
+                    </Link>
           ))}
           </div>
 </main>
@@ -60,7 +64,7 @@ export const getStaticProps: GetStaticProps = async () => {
           slug: post.uid,
           // title: RichText.asText(post.data.title),
           title: post.data.title,
-          excerpt: post.data.content[0].text.find(content => content.type ==='paragraph')?.text ?? '',
+          excerpt: post.data.content.find(content => content.type ==='preformatted')?.text ?? '',
           // excerpt: post.data.content.find(content => content.type ==='paragraph')?.text ?? '',
           updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
                     day: '2-digit',
@@ -69,7 +73,7 @@ export const getStaticProps: GetStaticProps = async () => {
                     })
           }
           })
-          console.log(posts, "PPPPPPPPPPPPPPPPPPPPPPPP")
+          // console.log(posts, "PPPPPPPPPPPPPPPPPPPPPPPP")
           
           return {
                     

@@ -9,7 +9,6 @@ import { ActiveLink } from '../ActiveLink'
 export function Header() {
   
   
-  
   return(
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
