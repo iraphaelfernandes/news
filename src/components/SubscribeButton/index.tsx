@@ -14,7 +14,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   const [session] = useSession();
   const router = useRouter()
   
-  console.log(session)
+  // console.log(session)
 
   async function handleSubscribe() {
 
