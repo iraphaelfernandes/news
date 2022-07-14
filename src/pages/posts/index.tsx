@@ -46,26 +46,21 @@ return(
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-          
           const prismic = getPrismicClient ();
-          
           const response = await prismic.query([
-
                     Prismic.predicates.at('document.type', 'publication')
           ], {
                     fetch: ['publication.title', 'publication.content'],
                     pageSize: 100,
           })
           
-          // console.log(JSON.stringify(response, null, 2), "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          
           const posts = response.results.map(post =>{
           return{
           slug: post.uid,
-          // title: RichText.asText(post.data.title),
           title: post.data.title,
-          excerpt: post.data.content.find(content => content.type ==='preformatted')?.text ?? '',
-          // excerpt: post.data.content.find(content => content.type ==='paragraph')?.text ?? '',
+          
+          excerpt: post.data.content.find(content => content.type ==='paragraph')?.text ?? '',
+          
           updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
                     day: '2-digit',
                     month: 'long',
@@ -73,12 +68,11 @@ export const getStaticProps: GetStaticProps = async () => {
                     })
           }
           })
-          // console.log(posts, "PPPPPPPPPPPPPPPPPPPPPPPP")
+          
+          // console.log( "RESPONSE!!!" ,  JSON.stringify( response, null, 2))
+          // console.log( "POSTS!!!" ,  JSON.stringify( posts, null, 2))
           
           return {
-                    
-                    props: {
-                              posts
-                    }
+                    props: { posts}
           }
 }
