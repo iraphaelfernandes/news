@@ -1,11 +1,8 @@
-import { GetStaticPaths, GetStaticProps } from "next";
-import {getSession, useSession} from "next-auth/client"
+import { GetStaticProps } from "next";
+import {getSession} from "next-auth/client"
 import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { RichText } from "prismic-dom";
-import { useEffect } from "react";
-import { getPrismicClient } from "../../../services/prismic";
+import { getPrismicClient } from  "../../../services/prismic";
 import styles from '../post.module.scss'
 
 
@@ -22,18 +19,6 @@ interface PostPreviewProps{
 
 export default function PostPreview({post}:PostPreviewProps){
   
-  const [session] = useSession()
-  const router = useRouter()
-  
-  useEffect(() => {
-    
-    if(session?.activeSubscription){
-      
-      router.push(`/posts/${post.slug}`)
-    }
-    
-  }, [session])
-  
   return(
     <>
       <Head>
@@ -45,48 +30,40 @@ export default function PostPreview({post}:PostPreviewProps){
           <h1>{post.title}</h1>
           <time>{post.updatedAt}</time>
           <div 
-          className={`${styles.postContent} ${styles.previewContent}}`}
-          dangerouslySetInnerHTML={{__html: post.content}}
-          />
-          
-          <div className={styles.continueReading}>
-            Wanna continue reading?
-            <Link href="/">
-              <a href="">Subscribe now</a>
-            </Link>
-          </div>
+          className={styles.postContent}
+          dangerouslySetInnerHTML={{__html: post.content}}/>
         </article>
       </main>
     </>
   );
 }
 
-export const getStaticPaths:GetStaticPaths = async ()=>{
+
+export const getStaticPaths = () => {
   
-  return{
+  return {
     paths: [],
     fallback: 'blocking'
-    //blockin => se tentar carregar um conteúdo qe ainda 
-    //não foi gerado de forma estática, vai tentar carregar
-    //na camada do next executando server side rendering
-    //Então, quando todo conteúdo estiver carregado,
-    //ele mostrará o html
   }
+  
 }
 
 
-export const getStaticProps:GetStaticProps= async ({ params }) => {
+export const getStaticProps:GetStaticProps = async ({ params}) => {
   
-  const {slug} = params;
+
+  const { slug } = params;
   
   const prismic = getPrismicClient()
-  const response = await prismic.getByUID('post', String(slug), {})
+  const response = await prismic.getByUID('publication', String(slug), {})
+  
+  // console.log(JSON.stringify(response, null, 2), "XXXXX")
   
   const post = {
     slug,
     title: response.data.title,
     // content: response.data.content.find(content => content.type ==='paragraph'),
-    content: response.data.content.find(content => content.type ==='paragraph').splice(0, 3)?.text ?? '',
+    content: response.data.content.find(content => content.type ==='paragraph')?.text ?? '',
     updatedAt: new Date(response.last_publication_date).toLocaleDateString('pt-BR', {
       day: '2-digit',
       month: 'long',
@@ -98,8 +75,7 @@ export const getStaticProps:GetStaticProps= async ({ params }) => {
     props:{
       
       post,
-    },
-    redirect: 60*30, //30min
-    
+      
+    }
   }
 }
