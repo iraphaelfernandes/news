@@ -34,7 +34,7 @@
                     
                     p{
                               
-                    color: pink;
+                    color:  var(--white-text-post);
                     margin-top:  0.5rem;
                     line-height:  1.625rem;
                     
@@ -42,7 +42,7 @@
                     
                     &:hover strong {
                               
-                              color: black;
+                              color: var(--hover-title-post);
                               
                     }
           }

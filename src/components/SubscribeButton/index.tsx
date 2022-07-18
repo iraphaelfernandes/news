@@ -49,7 +49,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       className={styles.subscribeButton}
       onClick={handleSubscribe}
     >
-      Subscribe now
+      Inscreva-se
     </button>
   )
 

@@ -1,9 +1,12 @@
 import { GetStaticProps } from "next";
-import {getSession} from "next-auth/client"
+import {getSession, useSession} from "next-auth/client"
 import Head from "next/head";
+import Link from "next/link";
 import { RichText } from "prismic-dom";
+import { useEffect } from "react";
 import { getPrismicClient } from  "../../../services/prismic";
 import styles from '../post.module.scss'
+import { useRouter } from 'next/dist/client/router';
 
 
 interface PostPreviewProps{
@@ -19,6 +22,15 @@ interface PostPreviewProps{
 
 export default function PostPreview({post}:PostPreviewProps){
   
+  const [session] = useSession()
+  const router = useRouter()
+  
+  useEffect(()=>{
+    if(session?.activeSubscription){
+      router.push(`/posts/${post.slug}`)
+    }
+  }, [session])
+  
   return(
     <>
       <Head>
@@ -30,8 +42,16 @@ export default function PostPreview({post}:PostPreviewProps){
           <h1>{post.title}</h1>
           <time>{post.updatedAt}</time>
           <div 
-          className={styles.postContent}
+          className={`${styles.postContent} ${styles.previewContent}`}
           dangerouslySetInnerHTML={{__html: post.content}}/>
+          
+          <div className={styles.continueReading}>
+            Quer continuar lendo?!
+            
+            <Link href="/">
+            <a href="">Inscreva-se</a>
+            </Link>
+          </div>
         </article>
       </main>
     </>
@@ -43,7 +63,7 @@ export const getStaticPaths = () => {
   
   return {
     paths: [],
-    fallback: 'blocking'
+    fallback: 'blocking' //true, false ou blocking      
   }
   
 }
@@ -65,7 +85,7 @@ export const getStaticProps:GetStaticProps = async ({ params}) => {
     title: response.data.title,
     // content: response.data.content.find(content => content.type ==='paragraph'),
     
-    content: response.data.content.find(content => content.type ==='paragraph')?.text ?? '',
+    content: RichText.asHtml(response.data.content.splice(0,3)),
     
     // content: RichText.asHtml(response.data.content),
     
@@ -80,7 +100,7 @@ export const getStaticProps:GetStaticProps = async ({ params}) => {
     props:{
       
       post,
-      
-    }
+    },
+    redirect: 60*30, //30 minutos
   }
 }

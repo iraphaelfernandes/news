@@ -27,7 +27,7 @@ export default function Post({post}:PostProps){
       
       <main className={styles.container}>
         <article className={styles.post}>
-          <h1>{post.title}</h1>
+          <h2>{post.title}</h2>
           <time>{post.updatedAt}</time>
           <div 
           className={styles.postContent}
@@ -45,8 +45,8 @@ export const getServerSideProps:GetServerSideProps = async ({req, params}) => {
   const { slug } = params;
   
   // console.log(session)
-   
-  if(!session.activeSubscription){
+  
+  if(!session?.activeSubscription){
     
     return{
       
